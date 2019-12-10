@@ -1,0 +1,5 @@
+ul,li{list-style:none; margin:0; padding:0;}
+.scroll{ height:150px; overflow:hidden; border:1px solid transparent;}
+.scroll li{ height:25px; line-height:25px; overflow:hidden;}
+.scroll li div{ font-size:20px; font-family:"宋体";color:#333; text-decoration:none;}
+.scroll li div:hover{ text-decoration:underline;}

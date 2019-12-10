@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网课答案查询_网课代看_网课代刷_在线查询答案_华夏网课系统</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="bookmark" href="favicon.ico">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="网课代看,网课代刷,网课答案,在线查题,答案查询,智慧树答案查询，知到答案查询,学习通答案查询，超星尔雅答案查询">
+    <meta http-equiv="description" content="网课答案,在线查题,答案,答案查询,智慧树答案查询，知到答案查询,学习通答案查询，超星尔雅答案查询">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="question\index.css">
+    <link rel="stylesheet" type="text/css" href="css\bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="question\reward.css">
+</head>
+<body style="font-family: 黑体">
+<div class="d1">
+    <div class="d11">
+        <textarea class="textarea" id="problem" placeholder="输入要查询题目,然后点击搜索答案进行查询" required="" rows="5"></textarea>
+    </div>
+    <div class="d12" align="center">
+        <input type="button" id="send" class="more_btn" value="搜索答案" onclick="searchProblem()"><br>
+        <!-- <button class="more_btn" data-toggle="modal" data-target="#tipReward">打赏作者</button>
+        <button class="more_btn" data-toggle="modal" data-target="#tipRewardDetails">打赏详情</button>
+       <button class="more_btn" data-toggle="modal" data-target="#problemApi">查题接口</button>
+        <button class="more_btn" data-toggle="modal" data-target="#replace">网课代看</button>
+        <button class="more_btn" data-toggle="modal" data-target="#contact">联系作者</button>
+        <button class="more_btn" data-toggle="modal" data-target="#vxProgram">微信查题</button>-->
+        <div class="span" id="ti">
+        </div>
+    </div>
+    <div class="d13">
+        <canvas id="canvas-club" width="100%" height="100%"></canvas>
+    </div>
+    <div id="loading" class="loading" style="position:absolute;z-index:5;margin-left: 47.8%;margin-top: 11.5%;"></div>
+</div>
+<!--打赏弹窗-->
+<div class="modal fade" id="tipReward" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">打赏作者</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" align="center">
+                <div>
+                    <strong>
+                        <font color="red" size="4">
+                            如果觉得本站好用不妨支持一下
+                            <br>毕竟服务器的维护也需要成本
+                            <br>当然了赞助全凭自愿
+                        </font>
+                    </strong>
+                    <img width="80%" src="QRcode\dashang.png">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px;">关闭
+                </button>
+                <button type="button" data-dismiss="modal" class="btn btn-primary">
+                    打赏完毕
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--打赏详情弹窗-->
+<div class="modal fade" id="tipRewardDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">打赏详情</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" align="center">
+                <div class="scroll">
+                    <ul class="list" id="gratuity">
+
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px;">关闭
+                </button>
+                <button type="button" data-dismiss="modal" class="btn btn-primary">
+                    已了解
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--接口文档弹窗-->
+<div class="modal fade" id="problemApi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">查题接口对接使用</h4>
+                <button type="button" class="close" style="right: 0" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" id="api">
+                        <p><span class="btn btn-primary btn-xs">接口地址1：</span>&nbsp;https://www.150s.cn/topic/getSubject
+                        </p>
+                        <p><span class="btn btn-primary btn-xs">接口地址2：</span>&nbsp;http://www.150s.cn/topic/getSubject
+                        </p>
+                        <p><span class="btn btn-info btn-xs">返回格式：</span>&nbsp;json</p>
+                        <p><span class="btn btn-success btn-xs">请求方式：</span>&nbsp;Get/Post</p>
+                        <p><span class="btn btn-warning btn-xs">请求示例：</span>&nbsp;https://www.150s.cn/topic/getSubject?title=题目
+                        </p>
+                        <p><span class="btn btn-warning btn-xs">请求示例：</span>&nbsp;https://www.150s.cn/topic/getSubject&nbsp;发送ajax请求;ajax的date{"title":题目}传送参数
+                        </p>
+                        <div class="tbtitles">
+                            <span class="btn btn-primary btn-sm">请求参数说明：</span>
+                        </div>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th width="100">名称</th>
+                                <th width="60">必填</th>
+                                <th width="80">类型</th>
+                                <th>说明</th>
+                            </tr>
+                            <tr>
+                                <td>title</td>
+                                <td>是</td>
+                                <td>string</td>
+                                <td>输入网课题目</td>
+                            </tr>
+                            <tr>
+                                <td>token</td>
+                                <td>是</td>
+                                <td>string</td>
+                                <td>联系作者购买授权</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="tbtitles">
+                            <span class="btn btn-info btn-sm">返回参数说明：</span>
+                        </div>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th width="100">名称</th>
+                                <th width="80">类型</th>
+                                <th>说明</th>
+                            </tr>
+                            <tr>
+                                <td>title</td>
+                                <td>string</td>
+                                <td>查询的题目信息</td>
+                            </tr>
+                            <tr>
+                                <td>answer</td>
+                                <td>string</td>
+                                <td>查询的答案信息</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="tbtitles">
+                            <span class="btn btn-success btn-sm">返回示例：</span>
+                        </div>
+                        <span class="pre">{"title":"正六和反恐惧六的区别体现在（）。","answer":"反恐惧六更有攻击性，直面挑战"}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px;">关闭
+                </button>
+                <button type="button" data-dismiss="modal" class="btn btn-primary">
+                    已了解
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--网课代看弹窗-->
+<div class="modal fade" id="replace" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">网课代看</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" align="center">
+                <div class="block">
+                    <li class="list-group-item" style="font-size: 1.3em"><span class="btn btn-danger btn-xs">1</span> 提供高校邦网课代看、超星学习通代看、知道智慧树代看、优学院网课代看、青书学堂代看、创就业云课堂代看、宏图课堂代看</li>
+                    <li class="list-group-item" style="font-size: 1.3em"><span class="btn btn-success btn-xs">2</span> 提供聚匠云网课代看、蓝墨云网课代看、明华慕课代看、新锦成网课代看、学堂在线代看、云学堂PRO网课、浙江线上大学代看、至善网网课代看、智慧职教云课堂、中国大学网课代看、网课学堂云3.0、好大学网课代看</li>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px;">关闭
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <a href="https://wpa.qq.com/msgrd?v=3&uin=88320640&site=qq&menu=yes" style="color: #ffffff">QQ联系</a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--联系作者弹窗-->
+<div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">联系作者</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" align="center">
+                <div style="display: inline;width: 50%;float: left">
+                    <h3>微信联系</h3>
+                    <img width="90%" src="QRcode\VX.png">
+                </div>
+                <div style="display: inline;width: 50%;float: right">
+                    <h3>QQ联系</h3>
+                    <img width="90%" src="QRcode\QQ.png">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px;">关闭
+                </button>
+                <button type="button" data-dismiss="modal" class="btn btn-primary">
+                    好的
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--微信小程序弹窗-->
+<div class="modal fade" id="vxProgram" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">微信查题小程序-微信扫码使用</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" align="center">
+                <div>
+                    <img width="80%" src="images\vxXCX.jfif">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px;">关闭
+                </button>
+                <button type="button" data-dismiss="modal" class="btn btn-primary">
+                    明白
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js\jquery-1.9.1.js?v=13"></script>
+<script src="js\popper.min.js?v=13"></script>
+<script src="layer\layer.js?v=13"></script>
+<script src="js\bootstrap.min.js?v=13"></script>
+<script src="question\index.js?v=13"></script>
+<script src="question\searchProblem.js?v=13"></script>
+<script src="question\reward.js?v=13"></script>
+<script>
+    $(function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    });
+</script>
+</body>
+</html>
