@@ -47,7 +47,8 @@ function searchProblem() {
     var problem = $("#problem").val();
     if (problem != "") {
         $.ajax({
-            url : 'https://www.150s.cn/topic/getSubject',
+            //url : 'https://www.150s.cn/topic/getSubject',
+            url : 'http://api.fm210.cn/wangke',
             type : 'post',
             async: true,
             data : {
